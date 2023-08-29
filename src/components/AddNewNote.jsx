@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function AddNewNote() {
+function AddNewNote({onAddNote}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const handleSubmit = (e) => {
@@ -12,7 +12,10 @@ function AddNewNote() {
       completed: false,
       createdAt: new Date().toISOString(),
     };
+    onAddNote(newNote);
     console.log(newNote);
+    setTitle("");
+    setDescription("");    
   };
   return (
     <div className="add-new-note">
@@ -34,7 +37,7 @@ function AddNewNote() {
         />
         <button className="btn btn--primary">Add New Note</button>
       </form>
-    </div>
+     </div>
   );
 }
 
