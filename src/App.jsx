@@ -1,6 +1,10 @@
+import { useState } from "react";
 import "./App.css";
 import AddNewNote from "./components/AddNewNote";
+import NoteItem from "./components/NoteList";
 function App() {
+  const [notes, setNotes]=useState([]);
+  const handleAddNote =(newNote)=>{(prevNote)=>{setNotes([...prevNote,newNote])}};
   return (
     <div className="container">
       <div className="note-header">
@@ -12,37 +16,8 @@ function App() {
         </select>
       </div>
       <div className="note-app">
-        <AddNewNote />
-        <div className="note-container">
-          <div className="note-status">
-            <p>
-              All <span>1</span>
-            </p>
-            <p>
-              Completed <span>2</span>
-            </p>
-            <p>
-              Open <span>3</span>
-            </p>
-          </div>
-          <div className="note-item">
-            <div className="note-item__header">
-              <div className="title">jkf</div>
-              <div className="desc">adding a new note</div>
-              <div className="trash">&#128465;</div>
-              <div className="action">
-                <input type="checkbox" />
-              </div>
-            </div>
-            <div className="note-item__footer">
-              {new Date().toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-              })}
-            </div>
-          </div>
-        </div>
+        <AddNewNote onAddNote={handleAddNote}/>
+        <NoteItem notes={notes}/>
       </div>
     </div>
   );
