@@ -14,6 +14,8 @@ function AddNewNote({ onAddNote }) {
     };
     onAddNote(newNote);
     console.log(newNote);
+    setTitle("");
+    setDescription("");
   };
   return (
     <div className="add-new-note">
