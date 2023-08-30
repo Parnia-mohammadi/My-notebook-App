@@ -1,10 +1,12 @@
 import { useState } from "react";
 import "./App.css";
 import AddNewNote from "./components/AddNewNote";
-import NoteItem from "./components/NoteList";
+import NoteList from "./components/NoteList";
 function App() {
-  const [notes, setNotes]=useState([]);
-  const handleAddNote =(newNote)=>{(prevNote)=>{setNotes([...prevNote,newNote])}};
+  const [notes, setNotes] = useState([]);
+  const handleAddNote = (newNote) => {
+    setNotes((prevNote) => [...prevNote, newNote]);
+  };
   return (
     <div className="container">
       <div className="note-header">
@@ -16,8 +18,8 @@ function App() {
         </select>
       </div>
       <div className="note-app">
-        <AddNewNote onAddNote={handleAddNote}/>
-        <NoteItem notes={notes}/>
+        <AddNewNote onAddNote={handleAddNote} />
+        <NoteList notes={notes} />
       </div>
     </div>
   );

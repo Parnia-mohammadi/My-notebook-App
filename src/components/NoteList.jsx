@@ -1,37 +1,50 @@
-function NoteList({notes}) {
+function NoteList({ notes }) {
   return (
     <div className="note-container">
-    <div className="note-status">
-      <p>
-        All <span></span>
-      </p>
-      <p>
-        Completed <span>2</span>
-      </p>
-      <p>
-        Open <span>3</span>
-      </p>
+      <div className="note-status">
+        <p>
+          All <span>{notes.length}</span>
+        </p>
+        <p>
+          Completed <span></span>
+        </p>
+        <p>
+          Open <span>3</span>
+        </p>
+      </div>
+      {notes.map((note) => {
+        return <NoteItem note={note} key={note.id} />;
+      })}
     </div>
+  );
+}
+export default NoteList;
+function NoteItem({ note }) {
+  const handleDelete = ()=>{
+    return(
+      note={}
+    )
+  }
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+  return (
     <div className="note-item">
-      {notes.map((note)=>{})}
       <div className="note-item__header">
-        <div className="title">jkf</div>
-        <div className="desc">adding a new note</div>
-        <div className="trash">&#128465;</div>
-        <div className="action">
+        <div>
+          <p className="title">{note.title}</p>
+          <p className="desc">{note.description}</p>
+        </div>
+        <div className="actions">
+          <button className="trash" onClick={handleDelete}>&#128465;</button>
           <input type="checkbox" />
         </div>
       </div>
       <div className="note-item__footer">
-        {new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        })}
+        {new Date(note.createdAt).toLocaleDateString("en-US", options)}
       </div>
     </div>
-  </div>
-  )
+  );
 }
-
-export default NoteList
