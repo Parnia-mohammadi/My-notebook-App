@@ -13,7 +13,6 @@ function AddNewNote({ onAddNote }) {
       createdAt: new Date().toISOString(),
     };
     onAddNote(newNote);
-    console.log(newNote);
     setTitle("");
     setDescription("");
   };
