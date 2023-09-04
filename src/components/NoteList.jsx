@@ -1,9 +1,26 @@
-import NoteStatus from "./NoteStatus"
-function NoteList({ notes, onDelete, onComplete }) {
+import NoteStatus from "./NoteStatus";
+function NoteList({ notes, onDelete, onComplete, sortBy }) {
+  let sortedNotes = notes;
+  if (sortBy == "earliest") {
+    sortedNotes = [...notes].sort(
+      (a, b) => (new Date(a.createdAt) - new Date(b.createdAt))
+    );
+  }
+
+  if (sortBy == "latest") {
+    sortedNotes = [...notes].sort(
+      (a, b) => (new Date(b.createdAt) - new Date(a.createdAt))
+    );
+  }
+  if (sortBy == "completed") {
+    sortedNotes = [...notes].sort(
+      (a, b) => (Number(a.completed) - Number(b.completed))
+    );
+  }
   return (
     <div className="note-container">
-      <NoteStatus  notes={notes}/>
-      {notes.map((note) => (
+      <NoteStatus notes={notes} />
+      {sortedNotes.map((note) => (
         <NoteItem
           note={note}
           key={note.id}
