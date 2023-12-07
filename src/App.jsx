@@ -1,38 +1,42 @@
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import AddNewNote from "./components/AddNewNote";
 import NoteList from "./components/NoteList";
 import SortNote from "./components/SortNote";
+import NotesProvider from "./context/NotesContext";
 function App() {
   // const [notes, setNotes] = useState([]);
   const [sortBy, setSortBy] = useState("earliest");
-  function noteReducer(notes, { type, payload }) {
-    switch (type) {
-      case "add": {
-        return [...notes, payload];
-      }
-      case "del":{
-        const filterNotes=(notes.filter((n)=>n.id!=payload));
-        return filterNotes;
-      }
-      case "complete":{
-        const id= payload.target.id;
-        return notes.map((note)=> note.id==id?{...note, completed : !note.completed}:note)
-      }
-      default: throw new Error ("unknown error :"+ type)
-    }
-  }
-  const [notes, dispatch] = useReducer(noteReducer, []);
+  // function noteReducer(notes, { type, payload }) {
+  //   switch (type) {
+  //     case "add": {
+  //       return [...notes, payload];
+  //     }
+  //     case "del": {
+  //       const filterNotes = notes.filter((n) => n.id != payload);
+  //       return filterNotes;
+  //     }
+  //     case "complete": {
+  //       const id = payload.target.id;
+  //       return notes.map((note) =>
+  //         note.id == id ? { ...note, completed: !note.completed } : note
+  //       );
+  //     }
+  //     default:
+  //       throw new Error("unknown error :" + type);
+  //   }
+  // }
+  // const [notes, dispatch] = useReducer(noteReducer, []);
   //using useReducer
-  const handleAddNote = (newNote) => {
-    dispatch({ type: "add", payload: newNote });
-  };
-  const handleDelete = (id) =>{
-    dispatch({type: "del",payload:id})
-  }
-  const handleComplete = (e) =>{
-    dispatch({type:"complete", payload:e})
-  }
+  // const handleAddNote = (newNote) => {
+  //   dispatch({ type: "add", payload: newNote });
+  // };
+  // const handleDelete = (id) => {
+  //   dispatch({ type: "del", payload: id });
+  // };
+  // const handleComplete = (e) => {
+  //   dispatch({ type: "complete", payload: e });
+  // };
   // const handleAddNote = (newNote) => {
   //   setNotes((prevNote) => [...prevNote, newNote]);
   // };
@@ -58,22 +62,19 @@ function App() {
   //   );
   // };
   return (
-    <div className="container">
-      <SortNote
-        notes={notes}
-        sortBy={sortBy}
-        onSort={(e) => setSortBy(e.target.value)}
-      />
-      <div className="note-app">
-        <AddNewNote onAddNote={handleAddNote} />
-        <NoteList
-          notes={notes}
-          onDelete={handleDelete}
-          onComplete={handleComplete}
-          sortBy={sortBy}
-        />
+    <NotesProvider>
+      <div className="container">
+        <SortNote sortBy={sortBy} onSort={(e) => setSortBy(e.target.value)} />
+        <div className="note-app">
+          {/* <AddNewNote onAddNote={handleAddNote} />
+           */}
+          <AddNewNote/>
+          <NoteList
+            sortBy={sortBy}
+          />
+        </div>
       </div>
-    </div>
+    </NotesProvider>
   );
 }
 

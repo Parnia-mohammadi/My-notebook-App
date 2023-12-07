@@ -1,4 +1,7 @@
-function NoteStatus({ notes }) {
+import { useNotes } from "../context/NotesContext";
+
+function NoteStatus() {
+  const notes= useNotes();
   //first way
   // let completedNoteNumber = 0;
   // notes.map((note) => {

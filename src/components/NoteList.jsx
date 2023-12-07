@@ -1,38 +1,42 @@
+import { useNotes, useNotesDispatch } from "../context/NotesContext";
 import NoteStatus from "./NoteStatus";
-function NoteList({ notes, onDelete, onComplete, sortBy }) {
+function NoteList({ sortBy }) {
+  const notes = useNotes();
   let sortedNotes = notes;
   if (sortBy == "earliest") {
     sortedNotes = [...notes].sort(
-      (a, b) => (new Date(a.createdAt) - new Date(b.createdAt))
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
     );
   }
 
   if (sortBy == "latest") {
     sortedNotes = [...notes].sort(
-      (a, b) => (new Date(b.createdAt) - new Date(a.createdAt))
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
   }
   if (sortBy == "completed") {
     sortedNotes = [...notes].sort(
-      (a, b) => (Number(a.completed) - Number(b.completed))
+      (a, b) => Number(a.completed) - Number(b.completed)
     );
   }
   return (
     <div className="note-container">
-      <NoteStatus notes={notes} />
+      <NoteStatus />
       {sortedNotes.map((note) => (
-        <NoteItem
-          note={note}
-          key={note.id}
-          onDelete={onDelete}
-          onComplete={onComplete}
-        />
+        // <NoteItem
+        //   note={note}
+        //   key={note.id}
+        //   onDelete={onDelete}
+        //   onComplete={onComplete}
+        // />
+        <NoteItem key={note.id} note={note}/>
       ))}
     </div>
   );
 }
 export default NoteList;
-function NoteItem({ note, onDelete, onComplete }) {
+function NoteItem({note}) {
+  const dispatch = useNotesDispatch();
   const options = {
     year: "numeric",
     month: "short",
@@ -46,7 +50,11 @@ function NoteItem({ note, onDelete, onComplete }) {
           <p className="desc">{note.description}</p>
         </div>
         <div className="actions">
-          <button className="trash" onClick={() => onDelete(note.id)}>
+          {/* <button className="trash" onClick={() => onDelete(note.id)}> */}
+          <button
+            className="trash"
+            onClick={() => dispatch({ type: "delete", payload: note.id })}
+          >
             &#128465;
           </button>
           <input
@@ -54,7 +62,7 @@ function NoteItem({ note, onDelete, onComplete }) {
             name={note.id}
             id={note.id}
             value={note.id}
-            onChange={onComplete}
+            onChange={(e)=>dispatch({type:"complete", payload:e})}
           />
         </div>
       </div>
