@@ -17,5 +17,5 @@ test("NoteApp #1:should input be empty after submit", () => {
   });
   const button = screen.getByRole("button", { name: /Add New Note/i });
   fireEvent.click(button);
-  expect(inputTitle).toBe("");
+  expect(inputTitle.value).toBe("");
 });

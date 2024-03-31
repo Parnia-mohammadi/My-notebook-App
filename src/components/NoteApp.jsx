@@ -1,5 +1,5 @@
-import AddNewNote from "./components/AddNewNote";
-import NoteList from "./components/NoteList";
+import AddNewNote from "./AddNewNote";
+import NoteList from "./NoteList";
 function NoteApp({ sortBy }) {
   return (
     <div className="note-app">
