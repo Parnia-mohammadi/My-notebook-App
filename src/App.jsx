@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import AddNewNote from "./components/AddNewNote";
-import NoteList from "./components/NoteList";
+import NoteApp from "./components/NoteApp";
 import SortNote from "./components/SortNote";
 import NotesProvider from "./context/NotesContext";
 function App() {
@@ -65,14 +64,7 @@ function App() {
     <NotesProvider>
       <div className="container">
         <SortNote sortBy={sortBy} onSort={(e) => setSortBy(e.target.value)} />
-        <div className="note-app">
-          {/* <AddNewNote onAddNote={handleAddNote} />
-           */}
-          <AddNewNote/>
-          <NoteList
-            sortBy={sortBy}
-          />
-        </div>
+        <NoteApp sortBy={sortBy} />
       </div>
     </NotesProvider>
   );
