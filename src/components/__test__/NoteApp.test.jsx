@@ -54,3 +54,15 @@ test("NoteApp #3:should not have active class when rendered initially", () => {
   const el = screen.getByTestId("note-item");
   expect(el).not.toHaveClass("completed");
 });
+test("NoteApp #4:should have active class when item clicked", () => {
+  render(
+    <NotesProvider>
+      <NoteApp sortBy="latest" />
+    </NotesProvider>
+  );
+  AddNote([{ title: "note title one", description: "note description one" }]);
+  const el = screen.getByTestId("note-item");
+  const checkbox = screen.getByRole("checkbox");
+  fireEvent.click(checkbox);
+  expect(el).toHaveClass("completed");
+});
