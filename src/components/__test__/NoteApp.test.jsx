@@ -1,7 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "../../test-utils";
 import { expect, test } from "vitest";
 import NoteApp from "../NoteApp";
 import NotesProvider from "../../context/NotesContext";
+import AppProviders from "../Providers/AppProviders";
 
 function AddNote(notes) {
   const inputTitle = screen.getByPlaceholderText(/Note Title/i);
@@ -14,11 +15,12 @@ function AddNote(notes) {
   });
 }
 test("NoteApp #1:should input be empty after submit", () => {
-  render(
-    <NotesProvider>
-      <NoteApp sortBy="latest" />
-    </NotesProvider>
-  );
+  // render(
+  //   <NotesProvider>
+  //     <NoteApp sortBy="latest" />
+  //   </NotesProvider>
+  // );
+  render(<NoteApp sortBy="latest" />);
   const inputTitle = screen.getByPlaceholderText("note title ...");
   // const inputDescription = screen.getByPlaceholderText("note description ...");
   // fireEvent.change(inputTitle, { target: { value: "note one title" } });
@@ -31,11 +33,12 @@ test("NoteApp #1:should input be empty after submit", () => {
   expect(inputTitle.value).toBe("");
 });
 test("NoteAPP #2:should add multiple items", () => {
-  render(
-    <NotesProvider>
-      <NoteApp sortBy="latest" />
-    </NotesProvider>
-  );
+  // render(
+  //   <NotesProvider>
+  //     <NoteApp sortBy="latest" />
+  //   </NotesProvider>
+  // );
+  render(<NoteApp sortBy="latest" />);
   AddNote([
     { title: "note title one", description: "note description one" },
     { title: "note title two", description: "note description two" },
@@ -45,21 +48,20 @@ test("NoteAPP #2:should add multiple items", () => {
   expect(divEl.length).toBe(3);
 });
 test("NoteApp #3:should not have active class when rendered initially", () => {
-  render(
-    <NotesProvider>
-      <NoteApp sortBy="latest" />
-    </NotesProvider>
-  );
+  // render(
+  //   <NotesProvider>
+  //     <NoteApp sortBy="latest" />
+  //   </NotesProvider>
+  // );
+  render(<NoteApp sortBy="latest" />);
   AddNote([{ title: "note title one", description: "note description one" }]);
   const el = screen.getByTestId("note-item");
   expect(el).not.toHaveClass("completed");
 });
 test("NoteApp #4:should have active class when item clicked", () => {
-  render(
-    <NotesProvider>
-      <NoteApp sortBy="latest" />
-    </NotesProvider>
-  );
+  //adding wrapper
+  // render(<NoteApp sortBy="latest" />, { wrapper: AppProviders });
+  render(<NoteApp sortBy="latest" />);
   AddNote([{ title: "note title one", description: "note description one" }]);
   const el = screen.getByTestId("note-item");
   const checkbox = screen.getByRole("checkbox");

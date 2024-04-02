@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import NoteApp from "./components/NoteApp";
 import SortNote from "./components/SortNote";
-import NotesProvider from "./context/NotesContext";
+import AppProviders from "./components/Providers/AppProviders";
 function App() {
   // const [notes, setNotes] = useState([]);
   const [sortBy, setSortBy] = useState("earliest");
@@ -61,12 +61,12 @@ function App() {
   //   );
   // };
   return (
-    <NotesProvider>
+    <AppProviders>
       <div className="container">
         <SortNote sortBy={sortBy} onSort={(e) => setSortBy(e.target.value)} />
         <NoteApp sortBy={sortBy} />
       </div>
-    </NotesProvider>
+    </AppProviders>
   );
 }
 
