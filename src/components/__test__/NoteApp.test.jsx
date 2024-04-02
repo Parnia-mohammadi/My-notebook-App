@@ -30,3 +30,17 @@ test("NoteApp #1:should input be empty after submit", () => {
   AddNote([{ title: "note title one", description: "note description one" }]);
   expect(inputTitle.value).toBe("");
 });
+test("NoteAPP #2:should add multiple items", () => {
+  render(
+    <NotesProvider>
+      <NoteApp sortBy="latest" />
+    </NotesProvider>
+  );
+  AddNote([
+    { title: "note title one", description: "note description one" },
+    { title: "note title two", description: "note description two" },
+    { title: "note title three", description: "note description three" },
+  ]);
+  const divEl = screen.getAllByText(/note title/i);
+  expect(divEl.length).toBe(3);
+});
