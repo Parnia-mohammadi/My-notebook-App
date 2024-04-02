@@ -44,3 +44,13 @@ test("NoteAPP #2:should add multiple items", () => {
   const divEl = screen.getAllByText(/note title/i);
   expect(divEl.length).toBe(3);
 });
+test("NoteApp #3:should not have active class when rendered initially", () => {
+  render(
+    <NotesProvider>
+      <NoteApp sortBy="latest" />
+    </NotesProvider>
+  );
+  AddNote([{ title: "note title one", description: "note description one" }]);
+  const el = screen.getByTestId("note-item");
+  expect(el).not.toHaveClass("completed");
+});

@@ -29,13 +29,13 @@ function NoteList({ sortBy }) {
         //   onDelete={onDelete}
         //   onComplete={onComplete}
         // />
-        <NoteItem key={note.id} note={note}/>
+        <NoteItem key={note.id} note={note} />
       ))}
     </div>
   );
 }
 export default NoteList;
-function NoteItem({note}) {
+function NoteItem({ note }) {
   const dispatch = useNotesDispatch();
   const options = {
     year: "numeric",
@@ -43,7 +43,10 @@ function NoteItem({note}) {
     day: "numeric",
   };
   return (
-    <div className={`note-item ${note.completed ? "completed" : ""}`}>
+    <div
+      data-testid="note-item"
+      className={`note-item ${note.completed ? "completed" : ""}`}
+    >
       <div className="note-item__header">
         <div>
           <p className="title">{note.title}</p>
@@ -62,7 +65,7 @@ function NoteItem({note}) {
             name={note.id}
             id={note.id}
             value={note.id}
-            onChange={(e)=>dispatch({type:"complete", payload:e})}
+            onChange={(e) => dispatch({ type: "complete", payload: e })}
           />
         </div>
       </div>
