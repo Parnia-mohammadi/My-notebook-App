@@ -19,6 +19,7 @@ function NoteList({ sortBy }) {
       (a, b) => Number(a.completed) - Number(b.completed)
     );
   }
+
   return (
     <div className="note-container">
       <NoteStatus />
