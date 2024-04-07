@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-const initializer = JSON.parse(localStorage.getItem("notes")) || [];
+// const initializer = JSON.parse(localStorage.getItem("notes")) || [];
 const NotesContext = createContext();
 const NotesDispatchContext = createContext(null);
 function noteReducer(notes, { type, payload }) {
@@ -25,8 +25,9 @@ function noteReducer(notes, { type, payload }) {
 }
 
 export default function NotesProvider({ children }) {
-  // const [notesLocal, setNotesLocal] = useLocalStorage("notes", []);
-  const [notes, dispatch] = useReducer(noteReducer, initializer);
+  const [localNotes, setLocalNotes] = useLocalStorage("notes", []);
+  // const [notes, dispatch] = useReducer(noteReducer, initializer);
+  const [notes, dispatch] = useReducer(noteReducer, localNotes);
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
